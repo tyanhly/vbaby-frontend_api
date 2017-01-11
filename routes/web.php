@@ -17,14 +17,29 @@ $app->get('/', function () use ($app) {
 });
 
 $app->group(['prefix' => 'v1'], function () use ($app) {
-    $app->get('index', 'TodosController@index');
-    $app->get('todos', 'TodosController@indexTodos');
-    $app->get('todos/{id}', 'TodosController@viewTodo');
-    $app->post('todos', 'TodosController@createTodo');
-    $app->put('todos/{id}', 'TodosController@updateTodo');
-    $app->delete('todos/{id}', 'TodosController@deleteTodo');
-    $app->post('todos/{id}/move', 'TodosController@moveTodo');
+
+
+    //Contents
+    $app->get('index', 'ContentsController@index');
+    $app->get('contents', 'ContentsController@indexContents');
+    $app->get('contents/{id}', 'ContentsController@viewContent');
+    $app->post('contents', 'ContentsController@createContent');
+    $app->put('contents/{id}', 'ContentsController@updateContent');
+    $app->delete('contents/{id}', 'ContentsController@deleteContent');
+    $app->post('contents/{id}/move', 'ContentsController@moveContent');
+
+    //Content Categories
+    $app->get('index', 'contentCategoriesController@index');
+    $app->get('contentCategories', 'contentCategoriesController@indexContentCategories');
+    $app->get('contentCategories/{id}', 'contentCategoriesController@viewContentCategories');
+    $app->post('contentCategories', 'contentCategoriesController@createContentCategories');
+    $app->put('contentCategories/{id}', 'contentCategoriesController@updateContentCategories');
+    $app->delete('contentCategories/{id}', 'contentCategoriesController@deleteContentCategories');
+    $app->post('contentCategories/{id}/move', 'contentCategoriesController@moveContentCategories');
+
+    //Swagger.yml
     $app->get('swagger.yml', function () {
         return file_get_contents(base_path("/resources/views/swagger.yml"));
     });
 });
+

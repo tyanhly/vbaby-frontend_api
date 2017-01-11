@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 
-class TodoRepository extends BaseRepository
+class ContentRepository extends BaseRepository
 {
 
     /**
@@ -13,12 +13,9 @@ class TodoRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'title',
-        'due_date',
-        'color',
-        'todo_groups_id',
-        'sort_order',
-        'marked'
+        'name',
+        'parent_id',
+        'ordering'
     ];
 
     /**
@@ -28,7 +25,7 @@ class TodoRepository extends BaseRepository
      */
     public function model()
     {
-        return \App\DataAccess\Eloquent\Todo::class;
+        return \App\DataAccess\Eloquent\Content::class;
     }
 
     /**
@@ -40,7 +37,9 @@ class TodoRepository extends BaseRepository
      */
     public function all($columns = ['*'])
     {
-        return $this->model::sorted()->get($columns);
+        //var_dump($this->model::with(['category']));die;
+        $result =$this->model::with(['category'])->orderBy('ordering', 'asc')->get($columns);
+        return $result;
     }
 
     /**
@@ -59,7 +58,7 @@ class TodoRepository extends BaseRepository
     }
 
     /**
-     * Move Todo After another Todo
+     * Move Content After another Content
      *
      * @param  int $id
      * @param  int $priorSiblingId

@@ -6,20 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \Rutorika\Sortable\SortableTrait;
 
-class Todo extends Model
+class ContentCategory extends Model
 {
     use SoftDeletes;
 
     use SortableTrait;
 
-    protected static $sortableField = 'sort_order';
+    protected static $sortableField = 'ordering';
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    public $table = 'todos';
+    public $table = 'vbaby_content_categories';
 
     /**
      * The "booting" method of the model.
@@ -30,7 +30,7 @@ class Todo extends Model
     {
         parent::boot();
 
-        Todo::deleting(function ($model) {
+        ContentCategory::deleting(function ($model) {
             $model->next()->decrement(self::$sortableField);
         });
     }
@@ -48,12 +48,10 @@ class Todo extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'due_date',
-        'color',
-        'todo_groups_id',
-        'sort_order',
-        'marked'
+        'name',
+        'parent_id',
+        'parent'
+
     ];
 
     /**
@@ -62,14 +60,14 @@ class Todo extends Model
      * @var array
      */
     protected $dates = [
-        'deleted_at', 'created_at', 'updated_at'
+        'deleted_at','created_at', 'updated_at'
     ];
 
     /**
-     * Get the group that owns this todo
+     * Get the group that owns this contentCategory
      */
-    public function group()
+    public function parent()
     {
-        return $this->belongsTo(App\TodoGroup::class, 'todo_groups_id');
+        return $this->belongsTo(App\DataAccess\Eloquent\ContentCategory::class, 'parent_id');
     }
 }
