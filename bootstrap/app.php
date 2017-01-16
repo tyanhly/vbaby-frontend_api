@@ -18,7 +18,7 @@ try {
 | application as an "IoC" container and router for this framework.
 |
 */
-
+/** @var Laravel\Lumen\Application */
 $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
@@ -93,7 +93,7 @@ $app->singleton(
 |
 */
 
-$app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
+$app->group(['namespace' => 'App\Http\Controllers'], function () {
     require __DIR__.'/../routes/web.php';
 });
 
