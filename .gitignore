@@ -3,3 +3,9 @@
 Homestead.json
 Homestead.yaml
 .env
+/composer.lock
+/adminer.php*
+/.vagrant
+/*.log
+
+
