@@ -17,8 +17,6 @@ $app->get('/', function () use ($app) {
 });
 
 $app->group(['prefix' => 'v1'], function () use ($app) {
-
-
     //Contents
     $app->get('index', 'ContentsController@index');
     $app->get('contents', 'ContentsController@indexContents');
